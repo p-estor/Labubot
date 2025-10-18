@@ -21,6 +21,8 @@ client.on('messageCreate', async (message) => {
     const twitterRegex = /(https?:\/\/)(?:www\.)?(twitter\.com|x\.com)\/[^\s]+/gi;
     // Regex para detectar enlaces de Instagram
     const instagramRegex = /(https?:\/\/)(?:www\.)?instagram\.com\/[^\s]+/gi;
+    // Regex para detectar enlaces de Bluesky
+    const blueskyRegex = /(https?:\/\/)(?:www\.)?bsky\.app\/[^\s]+/gi;
 
     let fixedMessage = message.content;
     let shouldReply = false;
@@ -37,6 +39,14 @@ client.on('messageCreate', async (message) => {
     if (instagramRegex.test(message.content)) {
         fixedMessage = fixedMessage.replace(instagramRegex, (url) => {
             return url.replace(/https:\/\/(www\.)?instagram\.com/, "https://kkinstagram.com");
+        });
+        shouldReply = true;
+    }
+
+    // Reemplazamos Bluesky por vxbsky
+    if (blueskyRegex.test(message.content)) {
+        fixedMessage = fixedMessage.replace(blueskyRegex, (url) => {
+            return url.replace(/bsky\.app/, "vxbsky.app");
         });
         shouldReply = true;
     }
