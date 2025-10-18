@@ -1,5 +1,7 @@
 require('dotenv').config();
-const { Client, Intents } = require('discord.js');
+const { Client, Intents, Collection } = require('discord.js');
+const fs = require('fs');
+const path = require('path');
 
 const client = new Client({ 
     intents: [
@@ -8,15 +10,59 @@ const client = new Client({
     ] 
 });
 
+// Configuración
+const PREFIX = '!';
+
+// Colección de comandos
+client.commands = new Collection();
+
+// Cargar comandos desde la carpeta commands/
+const commandsPath = path.join(__dirname, 'commands');
+if (fs.existsSync(commandsPath)) {
+    const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+
+    for (const file of commandFiles) {
+        const filePath = path.join(commandsPath, file);
+        const command = require(filePath);
+        
+        if ('name' in command && 'execute' in command) {
+            client.commands.set(command.name, command);
+            console.log(`✅ Comando cargado: ${command.name}`);
+        } else {
+            console.log(`⚠️ El comando en ${file} no tiene 'name' o 'execute'`);
+        }
+    }
+}
+
 // Evento que se ejecuta cuando el bot se conecta
 client.once('ready', () => {
     console.log(`✅ Bot iniciado como ${client.user.tag}`);
+    console.log(`📝 Prefijo de comandos: ${PREFIX}`);
 });
 
 // Evento que se ejecuta cada vez que alguien envía un mensaje
 client.on('messageCreate', async (message) => {
     if (message.author.bot) return; // Ignorar mensajes de otros bots
 
+    // === MANEJO DE COMANDOS ===
+    if (message.content.startsWith(PREFIX)) {
+        const args = message.content.slice(PREFIX.length).trim().split(/ +/);
+        const commandName = args.shift().toLowerCase();
+
+        const command = client.commands.get(commandName);
+
+        if (command) {
+            try {
+                await command.execute(message, args);
+            } catch (error) {
+                console.error(`Error ejecutando comando ${commandName}:`, error);
+                message.reply('❌ Hubo un error al ejecutar ese comando.');
+            }
+            return; // Salir después de procesar el comando
+        }
+    }
+
+    // === DETECCIÓN Y REEMPLAZO DE ENLACES ===
     // Regex para detectar enlaces de Twitter/X
     const twitterRegex = /(https?:\/\/)(?:www\.)?(twitter\.com|x\.com)\/[^\s]+/gi;
     // Regex para detectar enlaces de Instagram
