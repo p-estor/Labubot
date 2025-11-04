@@ -77,21 +77,6 @@ El bot detecta y convierte enlaces automáticamente. No requiere comandos.
 }
 ```
 
-## 🔧 Configuración Avanzada
-
-### Personalizar dominios de enlaces
-
-Edita el archivo `config.js`:
-```javascript
-module.exports = {
-  socialFixes: {
-    twitter: 'fxtwitter.com',
-    instagram: 'ddinstagram.com',
-    tiktok: 'vxtiktok.com'
-  }
-}
-```
-
 ### Ajustar permisos del bot
 
 Permisos recomendados:
