@@ -1,7 +1,5 @@
 # 🤖 Labubot
 
-# 🤖 Labubot
-
 **Labubot** es un bot de Discord multifuncional que mejora la experiencia del servidor con dos funciones principales:
 
 - 🔗 **Conversión automática de enlaces de redes sociales** para una mejor visualización  
