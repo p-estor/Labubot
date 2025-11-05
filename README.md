@@ -52,7 +52,7 @@ DISCORD_TOKEN=tu_token_de_discord_aqui
 
 Inicia el bot:
 ```bash
-npm start
+node index.js
 ```
 
 ---
