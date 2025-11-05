@@ -111,11 +111,17 @@ El bot detecta y convierte enlaces automáticamente — **no requiere comandos**
 
 ### 🈶 Diccionario
 **Usuario:**  
-`!jisho 猫`  
+!jisho 猫  
 
-**Bot:**  
-> Palabra: 猫 (ねこ)  
-> Significado: gato 🐱
+**Bot:** 
+
+Significados:
+cat (esp. the domestic cat, Felis catus) (Noun)  
+shamisen (Noun)  
+geisha (Noun)  
+
+📚 JLPT: jlpt-n5
+✨ Palabra común 
 
 ---
 
